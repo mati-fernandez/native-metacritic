@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-course-metacritic",
-    "slug": "react-native-course-metacritic",
+    "name": "metacritic-app",
+    "slug": "metacritic-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
