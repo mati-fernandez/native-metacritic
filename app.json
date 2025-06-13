@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "metacritic-app",
-    "slug": "metacritic-app",
+    "name": "rick-and-morty-app",
+    "slug": "rick-and-morty-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "jsEngine": "hermes"
     },
     "web": {
       "favicon": "./assets/favicon.png"

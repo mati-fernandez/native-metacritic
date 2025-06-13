@@ -1,6 +1,6 @@
 - [React Native Doc](https://reactnative.dev/docs/getting-started)
 
-# Metacritic App (React Native + Expo)
+# Rick & Morty App (React Native + Expo)
 
 ### Project Setup
 
@@ -58,3 +58,20 @@ module.exports = {
 };
 ```
 * Make sure to install the ESLint and Prettier extensions in your code editor.
+
+#### Preserving the Status Bar space
+To avoid ocuping the status bar space, we have some methods:
+
+### Constants
+`npx expo install expo-constants`
+& then...
+`import Constants from 'expo-constants';`
+We installed expo-constants to handle status bar height and safe area issues, especially on Android.
+
+SafeAreaView works well on iOS for avoiding notches and status bars, but on Android it doesn’t have full support. Instead, we use Constants.statusBarHeight from expo-constants to add top padding in the main container, so the UI doesn’t get hidden under the status bar.
+
+This way, the layout looks consistent across platforms without relying only on SafeAreaView.
+
+### Safe area context
+`npx expo install react-native-safe-area-context`
+
