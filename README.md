@@ -72,6 +72,22 @@ SafeAreaView works well on iOS for avoiding notches and status bars, but on Andr
 
 This way, the layout looks consistent across platforms without relying only on SafeAreaView.
 
-### Safe area context
-`npx expo install react-native-safe-area-context`
+### 🛡️ SafeAreaProvider in React Native
+- `react-native-safe-area-context` helps handle safe areas (notches, status bars, gesture areas).
 
+- On Android, not all devices have notches, but there’s always a status/nav bar. On iOS, avoiding overlaps is essential.
+
+- Wrap your app in `<SafeAreaProvider>` and use useSafeAreaInsets() to access top, bottom, left, and right.
+
+```js
+const insets = useSafeAreaInsets();
+<View style={{ paddingTop: insets.top }} />
+```
+- It's a cross-platform, more reliable alternative to Constants.statusBarHeight, and responds to dynamic changes like rotation or device notch updates.
+
+### Expo app bugs in Android emulator
+**Issue:**
+Using Ctrl+M (Reload) often causes JS debugger or Metro to break silently.
+
+**Workaround:**
+Uninstall Expo app manually from emulator
