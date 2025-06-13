@@ -1,16 +1,41 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { useEffect, useRef } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Animated,
+} from 'react-native';
 
 export function CharacterCard({ c }) {
   return (
-    <ScrollView contentContainerStyle={styles.cardContainer}>
-      <View style={styles.card}>
-        <Image source={{ uri: c.image }} style={styles.image} />
-        <Text style={styles.species}>{c.id}</Text>
-        <Text style={styles.name}>{c.name}</Text>
-        <Text style={styles.species}>{c.species}</Text>
-        <Text style={styles.status}>{c.status}</Text>
-      </View>
-    </ScrollView>
+    <View style={styles.card}>
+      <Image source={{ uri: c.image }} style={styles.image} />
+      <Text style={styles.species}>{c.id}</Text>
+      <Text style={styles.name}>{c.name}</Text>
+      <Text style={styles.species}>{c.species}</Text>
+      <Text style={styles.status}>{c.status}</Text>
+    </View>
+  );
+}
+
+export function AnimatedCharacterCard({ c, i }) {
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500,
+      delay: i * 250,
+      useNativeDriver: false,
+    }).start();
+  }, [opacity, i]);
+
+  return (
+    <Animated.View style={{ opacity }}>
+      <CharacterCard c={c} />
+    </Animated.View>
   );
 }
 

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { View, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 import { getCharacters, getCharacterDetails } from '../lib/rickmorty';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { CharacterCard } from './CharacterCard';
+import { AnimatedCharacterCard, CharacterCard } from './CharacterCard';
+import { Logo } from './Logo';
 
 export function Main() {
   const [characters, setCharacters] = useState([]);
@@ -19,8 +20,13 @@ export function Main() {
       style={{
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
+        flex: 1,
+        justifyContent: 'center',
       }}
     >
+      <View style={{ marginBottom: 20, maxHeight: 60 }}>
+        <Logo />
+      </View>
       {characters.length === 0 ? (
         <ActivityIndicator
           style={{
@@ -28,11 +34,13 @@ export function Main() {
           }}
         />
       ) : (
-        <ScrollView contentContainerStyle={styles.cardContainer}>
-          {characters.map((c) => (
-            <CharacterCard key={c.id} c={c} />
-          ))}
-        </ScrollView>
+        <FlatList
+          data={characters}
+          renderItem={({ item, index }) => (
+            <AnimatedCharacterCard c={item} i={index} />
+          )}
+          contentContainerStyle={styles.cardContainer}
+        />
       )}
     </View>
   );
