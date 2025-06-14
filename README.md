@@ -241,3 +241,4 @@ This allows using className props directly for styling Pressable elements.
 #### Changes when migrating from Slot to Stack:
 - You can no longer wrap `<Stack />` in a View with justify-center / items-center, as it distorts the navigation layout.
 - We removed the background (bg-black) from the parent View because Stack handles header and display styles separately.
+

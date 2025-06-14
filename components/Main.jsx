@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FlatList, ActivityIndicator } from 'react-native';
-import { getCharacters, getCharacterDetails } from '../lib/rickmorty';
+import { getCharacters } from '../lib/rickmorty';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AnimatedCharacterCard } from './CharacterCard';
 import { Screen } from '../components/Screen';
