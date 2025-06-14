@@ -77,7 +77,7 @@ SafeAreaView works well on iOS for avoiding notches and status bars, but on Andr
 
 This way, the layout looks consistent across platforms without relying only on SafeAreaView.
 
-### SafeAreaProvider in React Native
+### 🛡️SafeAreaProvider in React Native
 - `react-native-safe-area-context` helps handle safe areas (notches, status bars, gesture areas).
 
 - On Android, not all devices have notches, but there’s always a status/nav bar. On iOS, avoiding overlaps is essential.
@@ -154,3 +154,90 @@ SVGR is a tool that transforms SVG files into React components, simplifying how 
 - Optionally customize SVGR config to suit your style or props.
 
 This workflow optimizes SVG integration in React Native by bridging the gap between SVG files and RN's rendering model.
+
+### 🛠 NativeWind and Tailwind CSS Setup
+- **We installed NativeWind v2** to match the course version and maintain compatibility:
+    `npm install nativewind@2`
+
+- We also installed Tailwind CSS v3.3.2 with the `--save-dev` and `--save-exact` flags to prevent breaking changes:
+    npm install `--save-dev --save-exact tailwindcss@3.3.2`
+
+    > NativeWind’s official docs recommend version 3.3.2 as the maximum supported Tailwind version to ensure stability.
+    > https://www.nativewind.dev/quick-starts/expo
+
+- To initialize the Tailwind configuration file, we ran:
+    `npx tailwindcss init`
+
+- Tailwind config (tailwind.config.js):
+
+    ```js
+    /** @type {import('tailwindcss').Config} */
+    module.exports = {
+    content: [
+        './App.{js,jsx,ts,tsx}',
+        './components/**/*.{js,jsx,ts,tsx}',
+        './app/**/*.{js,jsx,ts,tsx}',
+    ],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+    };
+    ```
+- babel.config.js is required for NativeWind to work. If it wasn't auto-generated, create it manually:
+
+    ```js
+    module.exports = function (api) {
+    api.cache(true);
+    return {
+        presets: ['babel-preset-expo'],
+        plugins: ['nativewind/babel'],
+    };
+    };
+    ```
+#### NativeWind v2 Limitations Note
+
+- FlatList and other React Native core components do not support className directly in NativeWind v2.
+- To apply Tailwind styles, wrap FlatList in a <View> and apply className to that container instead.
+- Full className support for components like FlatList is only available in NativeWind v3.
+- We’ll continue using v2 for this course.
+
+### Routing Setup
+
+We installed the following packages to set up navigation and routing in the app:
+`npx expo install expo-router react-native-screens expo-linking`
+- expo-router: A file-based routing system for Expo apps, similar to Next.js. It lets you organize screens as files/folders and handles navigation automatically.
+
+- react-native-screens: Optimizes memory and performance for navigation by using native primitives to manage screen rendering.
+
+- expo-linking: Enables deep linking support, allowing the app to respond to URLs and navigate accordingly (e.g., for web sharing or mobile app links).
+
+These packages lay the foundation for implementing clean and scalable navigation within an Expo project.
+
+### Routing & Linking Setup (Expo Router)
+
+- Replaced "main": "index.js" with "main": "expo-router/entry" in package.json to enable file-based routing via expo-router.
+- Added "scheme": "rickandmorty" in app.json to support deep linking.
+- Created the /app directory to define route-based screens. Inside:
+  - index.js renders the main screen.
+  - _layout.js wraps all child routes with a shared layout.
+- The Slot component from expo-router is used in _layout.js to render the currently active route. It allows consistent layout while navigating between pages.
+
+### StyledPressable
+
+We created a custom StyledPressable using nativewind to apply Tailwind classes:
+
+```js
+import { styled } from 'nativewind';
+
+const StyledPressable = styled(Pressable);
+```
+This allows using className props directly for styling Pressable elements.
+
+### 📘 Expo Router: Slot vs Stack
+- `<Slot />`: This is a generic placeholder. It renders whatever is in that path without modifying headers or navigation. Ideal for simple screens or layouts without structured navigation.
+- `<Stack />`: Automatically creates a navigation stack (like in native mobile). It manages headers, back buttons, screen animations, etc.
+
+#### Changes when migrating from Slot to Stack:
+- You can no longer wrap `<Stack />` in a View with justify-center / items-center, as it distorts the navigation layout.
+- We removed the background (bg-black) from the parent View because Stack handles header and display styles separately.

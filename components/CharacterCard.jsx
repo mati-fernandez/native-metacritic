@@ -4,19 +4,31 @@ import {
   Text,
   View,
   Image,
-  ScrollView,
   Animated,
+  Pressable,
 } from 'react-native';
+import { Gender } from './Gender';
+import { Link } from 'expo-router';
+import { styled } from 'nativewind';
+
+const StyledPressable = styled(Pressable);
 
 export function CharacterCard({ c }) {
   return (
-    <View style={styles.card}>
-      <Image source={{ uri: c.image }} style={styles.image} />
-      <Text style={styles.species}>{c.id}</Text>
-      <Text style={styles.name}>{c.name}</Text>
-      <Text style={styles.species}>{c.species}</Text>
-      <Text style={styles.status}>{c.status}</Text>
-    </View>
+    <Link href={`/${c.id}`} asChild>
+      <StyledPressable className="m-3 border border-white rounded-xl active:scale-90">
+        <View className="flex-row p-4 bg-gray-900 rounded-xl">
+          <Image source={{ uri: c.image }} style={styles.image} />
+          <View className="ml-4">
+            <Text style={styles.species}>{c.id}</Text>
+            <Text style={styles.name}>{c.name}</Text>
+            <Gender c={c} />
+            <Text style={styles.species}>{c.species}</Text>
+            <Text style={styles.status}>{c.status}</Text>
+          </View>
+        </View>
+      </StyledPressable>
+    </Link>
   );
 }
 

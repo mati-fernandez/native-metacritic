@@ -6,19 +6,10 @@ import { Main } from './components/Main';
 export default function App() {
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
+      <View className="items-center justify-center flex-1 p-2 bg-black">
         <StatusBar style="light" />
         <Main />
       </View>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#000',
-    padding: 22,
-    flex: 1,
-    justifyContent: 'center',
-  },
-});
