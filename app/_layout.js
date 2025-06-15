@@ -6,7 +6,7 @@ export default function Layout() {
     <Stack
       screenOptions={{
         headerStyle: { backgroundColor: 'black' },
-        headerTitle: () => <Logo className="self-center" />,
+        headerTitle: () => <Logo className="self-center w-48 h-20" />,
       }}
     />
   );
