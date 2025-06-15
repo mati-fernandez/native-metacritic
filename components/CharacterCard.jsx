@@ -16,7 +16,7 @@ const StyledPressable = styled(Pressable);
 export function CharacterCard({ c }) {
   return (
     <Link href={`/${c.id}`} asChild>
-      <StyledPressable className="m-3 border border-white rounded-xl active:scale-90">
+      <StyledPressable className="m-3 border border-white rounded-xl active:scale-95">
         <View className="flex-row p-4 bg-gray-900 rounded-xl">
           <Image source={{ uri: c.image }} style={styles.image} />
           <View className="ml-4">

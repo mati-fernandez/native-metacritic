@@ -1,10 +1,11 @@
-import { Text, View } from 'react-native';
-import { Link, Stack } from 'expo-router';
+import { Image, Text, View } from 'react-native';
+import { Stack } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 import { Screen } from '../components/Screen';
 import { useEffect, useState } from 'react';
 import { getCharacterDetails } from '../lib/rickmorty';
 import { ActivityIndicator, ScrollView } from 'react-native';
+import { Gender } from '../components/Gender';
 
 export default function Detail() {
   const { id } = useLocalSearchParams();
@@ -14,13 +15,15 @@ export default function Detail() {
     if (id) {
       getCharacterDetails(id).then(setCharInfo);
     }
-  }, [charInfo]);
+  }, []);
+
+  console.log('charInfo', charInfo);
 
   return (
     <Screen>
       <Stack.Screen
         options={{
-          headerStyle: { backgroundColor: '#ffee00' },
+          headerStyle: { backgroundColor: '#a9d3e9' },
           headerTintColor: 'black',
           headerLeft: () => {},
           headerTitle: 'Character detail',
@@ -31,14 +34,33 @@ export default function Detail() {
         {charInfo === null ? (
           <ActivityIndicator color={'#fff'} size={'large'} />
         ) : (
-          <ScrollView>
-            <Text className="mb-8 text-2xl font-bold text-white">
-              Character detail {id}
-            </Text>
-            <Text className="text-white">{charInfo.name}</Text>
-            <Link href="/" className="text-blue-500">
-              Back
-            </Link>
+          <ScrollView
+            contentContainerStyle={{
+              width: '100%',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
+            <View className="justify-center h-full -translate-y-10 w-[214]">
+              <Image
+                className="mb-2 rounded"
+                source={{ uri: charInfo.image }}
+                style={{ width: 214, height: 294 }}
+              />
+              <Text className="self-start text-2xl font-bold text-white ">
+                {charInfo.name}
+              </Text>
+              <Text className="text-white">Gender: {charInfo.gender}</Text>
+              <Text className="text-white">Type: {charInfo.species}</Text>
+              <Text className="text-white">
+                Episodes: {charInfo.episodeCount}
+              </Text>
+              <Text className="text-white">Location: {charInfo.location}</Text>
+              <Text className="text-white">Origin: {charInfo.origin}</Text>
+              <Text className="text-base font-bold text-green-500">
+                Status: {charInfo.status}
+              </Text>
+            </View>
           </ScrollView>
         )}
       </View>
